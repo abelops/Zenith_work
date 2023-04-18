@@ -10,6 +10,7 @@ dotenv.config({path: './config/config.env'})
 
 // route files
 const users = require('./routes/users')
+const jobs = require('./routes/jobs')
 
 // connect to database
 
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
 // mount routers
 
 app.use('/api/v1/users', users)
+app.use('/api/v1/jobs', jobs)
 
 
 // error handler middleware
