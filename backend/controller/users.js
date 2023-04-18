@@ -3,8 +3,8 @@ const User = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async')
 
-// @desc Get all bootcamps
-// @route Get /api/v1/bootcamps
+// @desc Get all users
+// @route Get /api/v1/users
 // @access public 
 exports.getUsers = asyncHandler(async (req, res, next) => {
     let query
@@ -20,7 +20,8 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
     let queryStr = JSON.stringify(reqQuery)
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`)
 
-    query = User.find(JSON.parse(queryStr)).populate('courses')
+    // query = User.find(JSON.parse(queryStr)).populate('jobs')
+    query = User.find(JSON.parse(queryStr))
 
     // Select fields
     if (req.query.select){
@@ -45,7 +46,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
     query = query.skip(startIndex).limit(limit)
 
     // exicuting query
-    const bootcamps = await query
+    const users = await query
 
     // pagination result
     const pagination = {}
@@ -63,11 +64,11 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
         }
     }
 
-    res.status(200).json({success: true, count: bootcamps.length, pagination, data:bootcamps})
+    res.status(200).json({success: true, count: users.length, pagination, data:users})
 })
 
-// @desc Get single bootcamps
-// @route Get /api/v1/bootcamps/:id
+// @desc Get single users
+// @route Get /api/v1/users/:id
 // @access public 
 exports.getUser = asyncHandler(async (req, res, next) => {
     const bootcamp = await User.findById(req.params.id)
@@ -79,8 +80,8 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     res.status(200).json({success: true, data: bootcamp})
 })
 
-// @desc create new bootcamps
-// @route POST /api/v1/bootcamps
+// @desc create new users
+// @route POST /api/v1/users
 // @access private 
 exports.createUser = asyncHandler(async (req, res, next) => {
     const bootcamp = await User.create(req.body)
@@ -88,7 +89,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 })
 
 // @desc update bootcamp
-// @route PUT /api/v1/bootcamps/:id
+// @route PUT /api/v1/users/:id
 // @access private 
 exports.updateUser = asyncHandler(async (req, res, next) => {
     const bootcamp = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -104,7 +105,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 })
 
 // @desc delete bootcamp
-// @route DELETE /api/v1/bootcamps/:id
+// @route DELETE /api/v1/users/:id
 // @access private 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
     const bootcamp = await User.findByIdAndDelete(req.params.id);
