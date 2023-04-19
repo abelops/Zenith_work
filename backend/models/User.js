@@ -91,10 +91,10 @@ const UserSchema = new mongoose.Schema(
   
   
   // Reverse populate with virtuals
-  UserSchema.virtual('courses', {
-    ref: 'Course',
+  UserSchema.virtual('jobs', {
+    ref: 'Job',
     localField: '_id',
-    foreignField: 'bootcamp',
+    foreignField: 'user',
     justOne: false
   });
   

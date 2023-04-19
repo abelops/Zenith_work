@@ -1,29 +1,13 @@
 const User = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async')
-const queryHandler = require('../utils/queryHandler')
-const paginationHandler = require('../utils/paginationHandler')
-const pageHandler = require('../utils/pageHandler')
 const Jobs = require('../models/Jobs')
 
 // @desc Get all users
 // @route Get /api/v1/users
 // @access public 
 exports.getUsers = asyncHandler(async (req, res, next) => {
-    let query
-
-    // query = User.find(JSON.parse(queryStr)).populate('jobs')
-    query = User.find(queryHandler(req))
-
-    
-    const {result, page, limit, endIndex, startIndex} = paginationHandler(query, req)
-    const total = Math.ceil((await User.find(queryHandler(req))).length/limit)
-    // exicuting query
-    const users = await result
-
-    // pagination result
-    const pagination = pageHandler(total, page, limit)
-    res.status(200).json({success: true, count: users.length, pagination, data:users})
+    res.status(200).json(res.advancedResults)
 })
 
 // @desc Get single users
