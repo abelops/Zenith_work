@@ -1,4 +1,4 @@
-# Zenith Work
+# Zenith-Work
 
 > Backend API for Freelancer web app with Express.js 
 > Frontend done with react.js
