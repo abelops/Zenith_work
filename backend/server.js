@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const colors = require('colors')
+const cors = require('cors')
 const connectDB = require('./config/db')
 const errorHandler = require('./middleware/error')
 
@@ -17,6 +18,9 @@ const jobs = require('./routes/jobs')
 connectDB()
 
 const app = express()
+
+
+app.use(cors())
 
 // Body parser
 app.use(express.json())
